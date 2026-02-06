@@ -1,0 +1,6 @@
+node_modules/
+.next/
+.env
+app/.env
+app/src/generated/
+*.DS_Store
