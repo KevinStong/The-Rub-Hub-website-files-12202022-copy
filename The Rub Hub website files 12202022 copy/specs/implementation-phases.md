@@ -1,29 +1,30 @@
 # The Rub Hub — Implementation Phases
 
-## Phase 1: Foundation & Local Dev Environment (IN PROGRESS)
+## Phase 1: Foundation & Local Dev Environment (COMPLETE)
 
 **Goal:** Bootable local development environment with empty app shell.
 
 **Work:**
 - [x] Initialize Next.js project with TypeScript, Tailwind CSS, ESLint
-- [ ] Set up `docker-compose.yml` with MySQL, WordPress, Nginx, Mailhog
-- [x] Configure Prisma, define full schema (validated, migration pending until DB is running)
+- [x] Set up `docker-compose.yml` with MySQL, WordPress, Nginx, Mailhog
+- [x] Configure Prisma, define full schema, run initial migration
 - [x] Set up NextAuth with credentials provider (email/password)
-- [ ] Create root layout with placeholder nav/footer
-- [ ] Write `Makefile` with common commands
-- [ ] Create `.env.example` with documented variables
+- [x] Create root layout with placeholder nav/footer
+- [x] Write `Makefile` with common commands
+- [x] Create `.env.example` with documented variables
 
 **Verification:**
-- [ ] `docker compose up` boots all services without errors
-- [ ] Homepage renders at `localhost:3000`
-- [ ] WP admin accessible at `localhost:8080/wp-admin`
-- [ ] Prisma Studio connects to database and shows empty tables
-- [ ] Mailhog UI accessible
+- [x] `docker compose up` boots all 5 services without errors
+- [x] Homepage renders at `localhost:3000` (HTTP 200)
+- [x] WP admin accessible at `localhost:8080/wp-admin` (HTTP 302 to install)
+- [x] Database has all 13 tables via Prisma migration
+- [x] Mailhog UI accessible at `localhost:8025` (HTTP 200)
 
 **Notes:**
 - Prisma 7 moved `DATABASE_URL` from `schema.prisma` to `prisma.config.ts` — schema adjusted accordingly
 - Using NextAuth v5 (beta) with JWT session strategy
 - Prisma client output configured to `src/generated/prisma`
+- Added `db/init/01-create-databases.sql` to auto-create both `rubhub` and `rubhub_wp` databases on MySQL first boot
 
 ---
 
