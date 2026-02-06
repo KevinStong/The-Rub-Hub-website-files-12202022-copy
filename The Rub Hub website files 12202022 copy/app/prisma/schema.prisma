@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ─── Auth & Accounts ────────────────────────────────────────
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  createdAt    DateTime  @default(now())
+  lastLoginAt  DateTime?
+  provider     Provider?
+}
+
+// ─── Core Directory Models ──────────────────────────────────
+
+model Provider {
+  id          Int       @id @default(autoincrement())
+  slug        String    @unique
+  name        String
+  bio         String?   @db.Text
+  status      String    @default("active")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  userId      Int?      @unique
+  user        User?     @relation(fields: [userId], references: [id])
+
+  contacts    Contact[]
+  locations   Location[]
+  services    Service[]
+  photos      Photo[]
+  events      Event[]
+  coupons     Coupon[]
+  categories  ProviderCategory[]
+  specialties ProviderSpecialty[]
+  reviews     Review[]
+}
+
+model Contact {
+  id         Int      @id @default(autoincrement())
+  providerId Int
+  firstName  String
+  lastName   String
+  email      String?
+  phone      String?
+  isPublic   Boolean  @default(true)
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model Location {
+  id         Int      @id @default(autoincrement())
+  providerId Int
+  name       String?
+  address1   String
+  address2   String?
+  city       String
+  state      String
+  zip        String
+  country    String   @default("US")
+  lat        Float?
+  lng        Float?
+  hidden     Boolean  @default(false)
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  providerId  Int
+  name        String
+  type        String?
+  price       Decimal? @db.Decimal(10, 2)
+  description String?  @db.Text
+  isSpecial   Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  provider    Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model Photo {
+  id         Int      @id @default(autoincrement())
+  providerId Int
+  name       String?
+  caption    String?
+  url        String
+  thumbUrl   String?
+  sortOrder  Int      @default(0)
+  hidden     Boolean  @default(false)
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model Event {
+  id          Int       @id @default(autoincrement())
+  providerId  Int
+  name        String
+  description String?   @db.Text
+  startDate   DateTime
+  endDate     DateTime?
+  city        String?
+  state       String?
+  country     String?   @default("US")
+  zip         String?
+  hidden      Boolean   @default(false)
+  provider    Provider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model Coupon {
+  id              Int       @id @default(autoincrement())
+  providerId      Int
+  name            String
+  description     String?   @db.Text
+  smallPrint      String?   @db.Text
+  promoCode       String?
+  expirationDate  DateTime?
+  firstTimeOnly   Boolean   @default(false)
+  appointmentOnly Boolean   @default(false)
+  hidden          Boolean   @default(false)
+  sortOrder       Int       @default(0)
+  provider        Provider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  providerId Int
+  status     String   @default("pending")
+  content    String   @db.Text
+  createdAt  DateTime @default(now())
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+// ─── Reference Tables ───────────────────────────────────────
+
+model Category {
+  id        Int                @id @default(autoincrement())
+  name      String             @unique
+  slug      String             @unique
+  providers ProviderCategory[]
+}
+
+model Specialty {
+  id        Int                 @id @default(autoincrement())
+  name      String              @unique
+  slug      String              @unique
+  providers ProviderSpecialty[]
+}
+
+model ProviderCategory {
+  id         Int      @id @default(autoincrement())
+  providerId Int
+  categoryId Int
+  provider   Provider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, categoryId])
+}
+
+model ProviderSpecialty {
+  id          Int       @id @default(autoincrement())
+  providerId  Int
+  specialtyId Int
+  provider    Provider  @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  specialty   Specialty @relation(fields: [specialtyId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, specialtyId])
+}
