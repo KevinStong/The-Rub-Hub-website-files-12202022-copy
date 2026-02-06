@@ -4,3 +4,7 @@ node_modules/
 app/.env
 app/src/generated/
 *.DS_Store
+
+# Legacy files (reference only, not part of new app)
+site/
+db/*.sql.gz
