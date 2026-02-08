@@ -7,20 +7,20 @@ export function Header() {
   const { data: session, status } = useSession();
 
   return (
-    <header className="border-b border-zinc-200 bg-white">
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link href="/" className="text-xl font-bold text-zinc-900">
+    <header className="bg-brand-blue shadow-sm">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <Link href="/" className="text-xl font-bold text-white">
           The Rub Hub
         </Link>
-        <ul className="flex items-center gap-6 text-sm font-medium text-zinc-600">
+        <ul className="flex items-center gap-6 text-sm font-medium text-blue-100">
           <li>
-            <Link href="/directory" className="hover:text-zinc-900">
+            <Link href="/directory" className="hover:text-white">
               Directory
             </Link>
           </li>
           {status === "loading" ? (
             <li>
-              <span className="text-zinc-400">...</span>
+              <span className="text-blue-200">...</span>
             </li>
           ) : session?.user ? (
             <>
@@ -28,7 +28,7 @@ export function Header() {
                 <li>
                   <Link
                     href={`/directory/${session.user.providerSlug}`}
-                    className="hover:text-zinc-900"
+                    className="hover:text-white"
                   >
                     My Profile
                   </Link>
@@ -37,7 +37,7 @@ export function Header() {
               <li>
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
-                  className="hover:text-zinc-900"
+                  className="hover:text-white"
                 >
                   Log Out
                 </button>
@@ -45,7 +45,10 @@ export function Header() {
             </>
           ) : (
             <li>
-              <Link href="/auth/login" className="hover:text-zinc-900">
+              <Link
+                href="/auth/login"
+                className="rounded-md border border-white px-4 py-1.5 text-white hover:bg-white hover:text-brand-blue transition-colors"
+              >
                 Log In
               </Link>
             </li>
