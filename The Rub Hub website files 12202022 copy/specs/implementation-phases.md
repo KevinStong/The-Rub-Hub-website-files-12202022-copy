@@ -28,65 +28,103 @@
 
 ---
 
-## Phase 2: Data Migration
+## Phase 2: Data Migration (COMPLETE)
 
 **Goal:** Legacy data loaded into new schema, blog content in WordPress.
 
 **Work:**
-- Decompress and analyze legacy database dumps (`db/*.sql.gz`)
-- Write SQL migration scripts to transform legacy data into Prisma schema:
-  - `listing` -> `Provider`
-  - `listing~contact` -> `Contact`
-  - `listing~location` -> `Location`
-  - `listing~menu` -> `Service`
-  - `listing_subcategory` -> `Category`
-  - `ailment_subcategory` -> `Specialty`
-  - Junction tables -> `ProviderCategory`, `ProviderSpecialty`
-  - `photo` -> `Photo`
-  - `listing_event` -> `Event`
-  - `coupon` -> `Coupon`
-  - `comment` -> `Review`
-  - `mc_account` -> `User` (rehash passwords to bcrypt)
-- Write WP CLI script to import legacy blog posts and pages into headless WordPress
-- Migrate provider photos/images to `public/images/`
-- Package everything into `make seed` and `make import-wp-content` commands
+- [x] Decompress and analyze legacy database dumps (`db/*.sql.gz`)
+- [x] Write TypeScript migration script (`app/prisma/seed.ts`) using Prisma + mysql2:
+  - [x] `listing` -> `Provider` + `User` (active/visible only)
+  - [x] `listing~contact` -> `Contact` (privacy flags → isPublic)
+  - [x] `listing~location` -> `Location` (state_id/country_id denormalized)
+  - [x] `listing~menu` -> `Service` (price varchar → Decimal)
+  - [x] `listing_subcategory` -> `Category` (slug generated)
+  - [x] `ailment_subcategory` -> `Specialty` (slug generated)
+  - [x] Junction tables -> `ProviderCategory`, `ProviderSpecialty`
+  - [x] `photo` -> `Photo`
+  - [x] `listing_event` -> `Event`
+  - [x] `coupon` -> `Coupon`
+  - [x] `comment` -> `Review`
+  - [x] `listing` credentials -> `User` (plain text for dev)
+- [x] Write WP import script (`db/import-wp-content.sh`) — prefix rename + URL update
+- [ ] Migrate provider photos/images to `public/images/` (deferred to Phase 3)
+- [x] Package into `make seed` (loads legacy dump + runs seed.ts) and `make import-wp-content`
+
+**Notes:**
+- Migration uses TypeScript/Prisma instead of raw SQL for type safety and easier debugging
+- Legacy passwords stored as-is (plain text) since this is dev data only
+- Photos keep legacy `filebin/` paths in DB; actual file serving deferred to Phase 3
+- Only active, visible records migrated (status='active' AND hidden='No')
+- Shell scripts: `db/load-legacy.sh`, `db/import-wp-content.sh`
+- Prisma 7 requires `@prisma/adapter-mariadb` driver adapter with explicit connection params (not URL)
+- Legacy `comment` table uses `tableid` + `tablename_use` as polymorphic FK (not `listing_id`)
+- 2 services skipped due to name exceeding column length (2195/2197 migrated)
+
+**Migration Results:**
+| Entity | Count |
+|--------|-------|
+| Categories | 180 |
+| Specialties | 30 |
+| Providers | 5,164 |
+| Provider-Categories | 7,175 |
+| Provider-Specialties | 2,367 |
+| Contacts | 5,057 |
+| Locations | 2,568 |
+| Services | 2,195 |
+| Photos | 1,650 |
+| Events | 280 |
+| Coupons | 25 |
+| Reviews | 350 |
 
 **Verification:**
-- `make seed` loads provider data, queryable via Prisma Studio
-- `make import-wp-content` populates WordPress with blog posts
-- Spot-check: provider records have correct contacts, locations, services
-- Spot-check: blog posts render in WP admin
+- [x] `make seed` loads provider data, queryable via Prisma Studio
+- [x] `make import-wp-content` populates WordPress with blog posts
+- [x] Spot-check: provider records have correct contacts, locations, services
+- [x] Spot-check: blog posts render in WP admin
 
 ---
 
-## Phase 3: Provider Directory
+## Phase 3: Provider Directory (COMPLETE)
 
 **Goal:** Fully functional directory search and provider profile pages.
 
 **Work:**
-- Build directory search page (`/directory`):
-  - Search by keyword (provider name, bio)
-  - Filter by category and specialty
-  - Filter by location with radius (geocoding + distance calc)
-  - Paginated results
-- Build provider card component for search results
-- Build individual provider profile page (`/directory/[slug]`):
-  - Bio/description
-  - Contact information (respecting `isPublic` flag)
-  - Locations with embedded map (Google Maps or Mapbox)
-  - Services/menu with pricing
-  - Photos gallery
-  - Events
-  - Coupons
-  - Reviews
-- Build search API route (`/api/directory/search`) for client-side filtering
-- Implement `lib/geo.ts` for geocoding and distance calculations
+- [x] Build directory search page (`/directory`):
+  - [x] Search by keyword (provider name, bio)
+  - [x] Filter by category and specialty
+  - [x] Filter by state and city
+  - [x] Paginated results (20 per page)
+- [x] Build provider card component for search results
+- [x] Build search form component (client component with URL-based state)
+- [x] Build pagination component
+- [x] Build individual provider profile page (`/directory/[slug]`):
+  - [x] Bio/description
+  - [x] Contact information (respecting `isPublic` flag)
+  - [x] Locations (address display)
+  - [x] Services/menu with pricing and "Special" badges
+  - [x] Photos gallery
+  - [x] Events
+  - [x] Coupons
+  - [x] Reviews (filtered to approved only)
+  - [x] Category and specialty tags
+  - [x] Dynamic SEO metadata per provider
+- [ ] Location-based radius search (deferred — requires geocoding API)
+- [ ] Embedded maps on profile pages (deferred — requires Google Maps/Mapbox API)
 
 **Verification:**
-- Can search providers by keyword, category, specialty
-- Location-based search returns results within specified radius
-- Provider profile pages display all sections with real data
-- Map renders with correct pin locations
+- [x] Can search providers by keyword, category, specialty
+- [x] Can filter by state and city
+- [x] Provider profile pages display all sections with real data
+- [x] Empty sections hide themselves automatically
+- [x] 404 for nonexistent provider slugs
+- [x] `next build` succeeds without errors
+
+**Notes:**
+- Architecture: Server Components with URL-based search state for SEO and shareability
+- Only client components: SearchForm (form handling) and Pagination (search param preservation)
+- All data fetching via Prisma with parallel queries (Promise.all)
+- Prisma 7 Decimal import path: `@prisma/client/runtime/client` (not the v5/v6 path)
 
 ---
 

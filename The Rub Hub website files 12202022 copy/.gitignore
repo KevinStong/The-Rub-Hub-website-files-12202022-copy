@@ -8,3 +8,4 @@ app/src/generated/
 # Legacy files (reference only, not part of new app)
 site/
 db/*.sql.gz
+db/*.sql
