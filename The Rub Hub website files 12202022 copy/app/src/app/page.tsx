@@ -31,6 +31,10 @@ export default async function Home() {
     <>
       {/* Hero Section */}
       <section className="relative bg-brand-blue px-4 py-28 text-center">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/hero-spa.jpg')" }}
+        />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative mx-auto max-w-3xl">
           <h1 className="text-5xl font-bold tracking-tight text-white">

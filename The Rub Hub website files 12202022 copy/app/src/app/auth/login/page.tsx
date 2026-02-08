@@ -49,6 +49,10 @@ function LoginForm() {
 
   return (
     <section className="relative bg-brand-blue px-4 py-16">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/images/hero-spa.jpg')" }}
+      />
       <div className="absolute inset-0 bg-black/40" />
       <div className="relative mx-auto grid max-w-5xl gap-8 lg:grid-cols-2">
         {/* Login Form Card */}

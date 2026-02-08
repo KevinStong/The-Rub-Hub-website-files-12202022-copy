@@ -12,7 +12,7 @@ export function Header() {
         <Link href="/" className="text-xl font-bold text-white">
           The Rub Hub
         </Link>
-        <ul className="flex items-center gap-6 text-sm font-medium text-blue-100">
+        <ul className="flex items-center gap-6 text-sm font-medium text-white/80">
           <li>
             <Link href="/directory" className="hover:text-white">
               Directory
@@ -20,7 +20,7 @@ export function Header() {
           </li>
           {status === "loading" ? (
             <li>
-              <span className="text-blue-200">...</span>
+              <span className="text-white/60">...</span>
             </li>
           ) : session?.user ? (
             <>
