@@ -42,6 +42,7 @@ export function Pagination({ currentPage, totalPages, basePath = "/directory" }:
         <Link
           key={page}
           href={buildHref(page)}
+          aria-current={page === currentPage ? "page" : undefined}
           className={`rounded-md px-3 py-2 text-sm ${
             page === currentPage
               ? "bg-zinc-900 text-white"

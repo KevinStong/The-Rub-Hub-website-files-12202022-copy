@@ -14,7 +14,7 @@ export default async function Home() {
     prisma.category.findMany({
       orderBy: { name: "asc" },
       include: {
-        providers: { select: { id: true } },
+        _count: { select: { providers: true } },
       },
     }),
     prisma.provider.findMany({
@@ -43,7 +43,9 @@ export default async function Home() {
             method="GET"
             className="mx-auto mt-10 flex max-w-xl gap-3"
           >
+            <label htmlFor="hero-search" className="sr-only">Search for providers</label>
             <input
+              id="hero-search"
               type="text"
               name="q"
               placeholder="Search by name, specialty, or location..."
@@ -76,8 +78,8 @@ export default async function Home() {
                   {category.name}
                 </span>
                 <span className="mt-1 block text-sm text-zinc-500">
-                  {category.providers.length}{" "}
-                  {category.providers.length === 1 ? "provider" : "providers"}
+                  {category._count.providers}{" "}
+                  {category._count.providers === 1 ? "provider" : "providers"}
                 </span>
               </Link>
             ))}

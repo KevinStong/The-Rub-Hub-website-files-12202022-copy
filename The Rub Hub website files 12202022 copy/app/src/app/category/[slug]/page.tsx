@@ -36,31 +36,31 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   const page = Math.max(1, parseInt(pageParam ?? "1", 10) || 1);
   const skip = (page - 1) * PAGE_SIZE;
 
-  const [category, totalCount] = await Promise.all([
-    prisma.category.findUnique({ where: { slug } }),
-    prisma.provider.count({
-      where: {
-        status: "active",
-        categories: { some: { category: { slug } } },
-      },
-    }),
-  ]);
+  const category = await prisma.category.findUnique({ where: { slug } });
 
   if (!category) notFound();
 
-  const providers = await prisma.provider.findMany({
-    where: {
-      status: "active",
-      categories: { some: { categoryId: category.id } },
-    },
-    include: {
-      categories: { include: { category: true } },
-      locations: { select: { city: true, state: true }, take: 1 },
-    },
-    orderBy: { name: "asc" },
-    skip,
-    take: PAGE_SIZE,
-  });
+  const [totalCount, providers] = await Promise.all([
+    prisma.provider.count({
+      where: {
+        status: "active",
+        categories: { some: { categoryId: category.id } },
+      },
+    }),
+    prisma.provider.findMany({
+      where: {
+        status: "active",
+        categories: { some: { categoryId: category.id } },
+      },
+      include: {
+        categories: { include: { category: true } },
+        locations: { select: { city: true, state: true }, take: 1 },
+      },
+      orderBy: { name: "asc" },
+      skip,
+      take: PAGE_SIZE,
+    }),
+  ]);
 
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
   const start = skip + 1;
