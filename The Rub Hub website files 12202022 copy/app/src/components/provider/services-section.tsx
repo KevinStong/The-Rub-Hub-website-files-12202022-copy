@@ -1,10 +1,8 @@
-import type { Decimal } from "@prisma/client/runtime/client";
-
 type Service = {
   id: number;
   name: string;
   type: string | null;
-  price: Decimal | null;
+  price: number | string | null;
   description: string | null;
   isSpecial: boolean;
   sortOrder: number;

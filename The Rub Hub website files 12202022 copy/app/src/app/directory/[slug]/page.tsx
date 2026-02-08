@@ -1,12 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { ContactSection } from "@/components/provider/contact-section";
-import { LocationSection } from "@/components/provider/location-section";
-import { ServicesSection } from "@/components/provider/services-section";
-import { PhotosSection } from "@/components/provider/photos-section";
-import { EventsSection } from "@/components/provider/events-section";
-import { CouponsSection } from "@/components/provider/coupons-section";
-import { ReviewsSection } from "@/components/provider/reviews-section";
+import { getOwnerStatus } from "@/lib/get-owner-status";
+import { ProfileEditor } from "@/components/provider/profile-editor";
 import type { Metadata } from "next";
 
 type PageProps = {
@@ -33,26 +28,51 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ProviderProfilePage({ params }: PageProps) {
   const { slug } = await params;
 
-  const provider = await prisma.provider.findUnique({
-    where: { slug },
-    include: {
-      contacts: true,
-      locations: true,
-      services: true,
-      photos: true,
-      events: true,
-      coupons: true,
-      reviews: true,
-      categories: { include: { category: true } },
-      specialties: { include: { specialty: true } },
-    },
-  });
+  const [provider, isOwner] = await Promise.all([
+    prisma.provider.findUnique({
+      where: { slug },
+      include: {
+        contacts: true,
+        locations: true,
+        services: true,
+        photos: true,
+        events: true,
+        coupons: true,
+        reviews: true,
+        categories: { include: { category: true } },
+        specialties: { include: { specialty: true } },
+      },
+    }),
+    getOwnerStatus(slug),
+  ]);
 
   if (!provider) notFound();
 
+  // Serialize provider data for the client component.
+  // JSON round-trip converts Prisma Decimal fields (service.price) to numbers
+  // and Date fields to ISO strings, making the data safe for client hydration.
+  const serializedProvider = JSON.parse(JSON.stringify({
+    name: provider.name,
+    bio: provider.bio,
+    contacts: provider.contacts,
+    locations: provider.locations,
+    services: provider.services,
+    photos: provider.photos,
+    events: provider.events,
+    coupons: provider.coupons,
+    reviews: provider.reviews,
+  }));
+
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
-      {/* Header */}
+      {/* Owner banner */}
+      {isOwner && (
+        <div className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800">
+          This is your profile. Hover over sections to edit.
+        </div>
+      )}
+
+      {/* Header — always server-rendered, not editable via ProfileEditor */}
       <h1 className="text-3xl font-bold text-zinc-900">{provider.name}</h1>
       {provider.categories.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-2">
@@ -79,26 +99,8 @@ export default async function ProviderProfilePage({ params }: PageProps) {
         </div>
       )}
 
-      {/* Bio */}
-      {provider.bio && (
-        <section className="mt-8">
-          <h2 className="text-xl font-semibold text-zinc-900">About</h2>
-          <p className="mt-3 whitespace-pre-line text-zinc-600">
-            {provider.bio}
-          </p>
-        </section>
-      )}
-
-      {/* Sections — each hides itself if empty */}
-      <div className="mt-8 space-y-10">
-        <ContactSection contacts={provider.contacts} />
-        <LocationSection locations={provider.locations} />
-        <ServicesSection services={provider.services} />
-        <PhotosSection photos={provider.photos} />
-        <EventsSection events={provider.events} />
-        <CouponsSection coupons={provider.coupons} />
-        <ReviewsSection reviews={provider.reviews} />
-      </div>
+      {/* Editable sections managed by the client ProfileEditor */}
+      <ProfileEditor provider={serializedProvider} isOwner={isOwner} />
     </div>
   );
 }

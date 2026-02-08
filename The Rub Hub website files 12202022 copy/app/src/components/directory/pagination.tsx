@@ -6,9 +6,10 @@ import { useSearchParams } from "next/navigation";
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
+  basePath?: string;
 };
 
-export function Pagination({ currentPage, totalPages }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, basePath = "/directory" }: PaginationProps) {
   const searchParams = useSearchParams();
 
   if (totalPages <= 1) return null;
@@ -16,7 +17,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
   function buildHref(page: number) {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(page));
-    return `/directory?${params.toString()}`;
+    return `${basePath}?${params.toString()}`;
   }
 
   // Show up to 5 page numbers centered around current page
@@ -41,6 +42,7 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
         <Link
           key={page}
           href={buildHref(page)}
+          aria-current={page === currentPage ? "page" : undefined}
           className={`rounded-md px-3 py-2 text-sm ${
             page === currentPage
               ? "bg-zinc-900 text-white"

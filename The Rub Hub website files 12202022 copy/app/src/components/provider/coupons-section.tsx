@@ -4,7 +4,7 @@ type Coupon = {
   description: string | null;
   smallPrint: string | null;
   promoCode: string | null;
-  expirationDate: Date | null;
+  expirationDate: Date | string | null;
   firstTimeOnly: boolean;
   appointmentOnly: boolean;
   hidden: boolean;

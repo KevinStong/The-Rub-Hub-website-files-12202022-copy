@@ -2,8 +2,8 @@ type Event = {
   id: number;
   name: string;
   description: string | null;
-  startDate: Date;
-  endDate: Date | null;
+  startDate: Date | string;
+  endDate: Date | string | null;
   city: string | null;
   state: string | null;
   hidden: boolean;
