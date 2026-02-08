@@ -145,7 +145,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
                 onChange={(e) =>
                   updateItem(index, { firstName: e.target.value })
                 }
-                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
               />
             </div>
             <div>
@@ -159,7 +159,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
                 onChange={(e) =>
                   updateItem(index, { lastName: e.target.value })
                 }
-                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
               />
             </div>
           </div>
@@ -176,7 +176,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
                 onChange={(e) =>
                   updateItem(index, { email: e.target.value })
                 }
-                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
               />
             </div>
             <div>
@@ -190,7 +190,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
                 onChange={(e) =>
                   updateItem(index, { phone: e.target.value })
                 }
-                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
               />
             </div>
           </div>
@@ -212,7 +212,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
       <button
         type="button"
         onClick={addItem}
-        className="text-sm font-medium text-blue-600 hover:underline"
+        className="text-sm font-medium text-brand-blue hover:underline"
       >
         + Add Contact
       </button>
@@ -225,7 +225,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
         <button
           type="submit"
           disabled={saving}
-          className="bg-zinc-900 text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-zinc-800 disabled:opacity-50"
+          className="bg-brand-gold text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-brand-gold-dark transition-colors disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save"}
         </button>

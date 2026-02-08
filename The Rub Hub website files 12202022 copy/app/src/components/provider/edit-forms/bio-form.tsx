@@ -58,7 +58,7 @@ export function BioForm({ provider, onCancel }: BioFormProps) {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+          className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
         />
       </div>
 
@@ -74,7 +74,7 @@ export function BioForm({ provider, onCancel }: BioFormProps) {
           rows={6}
           value={bio}
           onChange={(e) => setBio(e.target.value)}
-          className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+          className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
         />
       </div>
 
@@ -86,7 +86,7 @@ export function BioForm({ provider, onCancel }: BioFormProps) {
         <button
           type="submit"
           disabled={saving}
-          className="bg-zinc-900 text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-zinc-800 disabled:opacity-50"
+          className="bg-brand-gold text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-brand-gold-dark transition-colors disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save"}
         </button>

@@ -157,7 +157,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
               value={item.name}
               onChange={(e) => updateItem(index, { name: e.target.value })}
               placeholder="e.g. Main Office"
-              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
             />
           </div>
 
@@ -171,7 +171,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
               required
               value={item.address1}
               onChange={(e) => updateItem(index, { address1: e.target.value })}
-              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
             />
           </div>
 
@@ -184,7 +184,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
               type="text"
               value={item.address2}
               onChange={(e) => updateItem(index, { address2: e.target.value })}
-              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
             />
           </div>
 
@@ -199,7 +199,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
                 required
                 value={item.city}
                 onChange={(e) => updateItem(index, { city: e.target.value })}
-                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
               />
             </div>
             <div>
@@ -212,7 +212,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
                 required
                 value={item.state}
                 onChange={(e) => updateItem(index, { state: e.target.value })}
-                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
               />
             </div>
             <div>
@@ -225,7 +225,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
                 required
                 value={item.zip}
                 onChange={(e) => updateItem(index, { zip: e.target.value })}
-                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
               />
             </div>
           </div>
@@ -239,7 +239,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
               type="text"
               value={item.country}
               onChange={(e) => updateItem(index, { country: e.target.value })}
-              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
+              className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue"
             />
           </div>
 
@@ -260,7 +260,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
       <button
         type="button"
         onClick={addItem}
-        className="text-sm font-medium text-blue-600 hover:underline"
+        className="text-sm font-medium text-brand-blue hover:underline"
       >
         + Add Location
       </button>
@@ -273,7 +273,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
         <button
           type="submit"
           disabled={saving}
-          className="bg-zinc-900 text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-zinc-800 disabled:opacity-50"
+          className="bg-brand-gold text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-brand-gold-dark transition-colors disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save"}
         </button>
