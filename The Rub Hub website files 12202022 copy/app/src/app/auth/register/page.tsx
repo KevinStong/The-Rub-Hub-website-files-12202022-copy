@@ -63,11 +63,39 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-2xl font-bold text-zinc-900">Create an Account</h1>
+    <div className="mx-auto max-w-2xl px-4 py-16">
+      <h1 className="text-2xl font-bold text-zinc-900">Practitioner Membership</h1>
       <p className="mt-2 text-sm text-zinc-600">
         Register as a provider to list your services on The Rub Hub.
       </p>
+
+      {/* Benefits Box */}
+      <div className="mt-6 rounded-lg bg-brand-blue-light p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-brand-blue">
+          Membership Benefits
+        </h2>
+        <ul className="mt-3 space-y-2 text-sm text-zinc-700">
+          <li className="flex items-start gap-2">
+            <span className="mt-0.5 text-brand-blue">&#10003;</span>
+            Professional profile page with your services, specialties, and contact info
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-0.5 text-brand-blue">&#10003;</span>
+            Appear in directory search results for your area
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-0.5 text-brand-blue">&#10003;</span>
+            Promote events, coupons, and special offers
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="mt-0.5 text-brand-blue">&#10003;</span>
+            Upload photos and manage your online presence
+          </li>
+        </ul>
+        <p className="mt-4 text-sm font-bold text-brand-gold">
+          COMPLETELY FREE OF COST
+        </p>
+      </div>
 
       {error && (
         <div className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
@@ -87,7 +115,7 @@ export default function RegisterPage() {
               type="text"
               required
               autoComplete="given-name"
-              className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+              className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
             />
           </div>
           <div>
@@ -100,7 +128,7 @@ export default function RegisterPage() {
               type="text"
               required
               autoComplete="family-name"
-              className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+              className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
             />
           </div>
         </div>
@@ -114,7 +142,7 @@ export default function RegisterPage() {
             type="email"
             required
             autoComplete="email"
-            className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+            className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
           />
         </div>
         <div>
@@ -128,7 +156,7 @@ export default function RegisterPage() {
             required
             minLength={8}
             autoComplete="new-password"
-            className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+            className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
           />
           <p className="mt-1 text-xs text-zinc-500">At least 8 characters</p>
         </div>
@@ -143,21 +171,21 @@ export default function RegisterPage() {
             required
             minLength={8}
             autoComplete="new-password"
-            className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+            className="mt-1 block w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
           />
         </div>
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50"
+          className="w-full rounded-md bg-brand-gold px-4 py-2 text-sm font-medium text-white hover:bg-brand-gold-dark disabled:opacity-50"
         >
-          {loading ? "Creating account..." : "Create Account"}
+          {loading ? "Creating account..." : "Join Now"}
         </button>
       </form>
 
       <p className="mt-6 text-center text-sm text-zinc-600">
         Already have an account?{" "}
-        <Link href="/auth/login" className="font-medium text-zinc-900 hover:underline">
+        <Link href="/auth/login" className="font-medium text-brand-blue hover:underline">
           Log In
         </Link>
       </p>
