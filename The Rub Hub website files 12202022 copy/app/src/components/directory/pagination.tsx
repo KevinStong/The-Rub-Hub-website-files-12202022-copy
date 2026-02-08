@@ -33,7 +33,7 @@ export function Pagination({ currentPage, totalPages, basePath = "/directory" }:
       {currentPage > 1 && (
         <Link
           href={buildHref(currentPage - 1)}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-600 hover:bg-zinc-50"
+          className="rounded-md border border-gray-300 px-3 py-2 text-sm text-brand-blue hover:bg-brand-blue-light"
         >
           Previous
         </Link>
@@ -45,8 +45,8 @@ export function Pagination({ currentPage, totalPages, basePath = "/directory" }:
           aria-current={page === currentPage ? "page" : undefined}
           className={`rounded-md px-3 py-2 text-sm ${
             page === currentPage
-              ? "bg-zinc-900 text-white"
-              : "border border-zinc-300 text-zinc-600 hover:bg-zinc-50"
+              ? "bg-brand-blue text-white"
+              : "border border-gray-300 text-brand-blue hover:bg-brand-blue-light"
           }`}
         >
           {page}
@@ -55,7 +55,7 @@ export function Pagination({ currentPage, totalPages, basePath = "/directory" }:
       {currentPage < totalPages && (
         <Link
           href={buildHref(currentPage + 1)}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-600 hover:bg-zinc-50"
+          className="rounded-md border border-gray-300 px-3 py-2 text-sm text-brand-blue hover:bg-brand-blue-light"
         >
           Next
         </Link>
