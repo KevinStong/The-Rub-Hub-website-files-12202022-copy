@@ -15,6 +15,7 @@ model User {
   passwordHash String
   firstName    String
   lastName     String
+  role         String    @default("provider")
   createdAt    DateTime  @default(now())
   lastLoginAt  DateTime?
   provider     Provider?
