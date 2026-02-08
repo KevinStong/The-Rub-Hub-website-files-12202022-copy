@@ -69,11 +69,11 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <nav aria-label="Breadcrumb" className="text-sm text-zinc-500">
-        <Link href="/" className="hover:underline">
+        <Link href="/" className="text-brand-blue hover:underline">
           Home
         </Link>
         <span className="mx-2">&rsaquo;</span>
-        <Link href="/directory" className="hover:underline">
+        <Link href="/directory" className="text-brand-blue hover:underline">
           Directory
         </Link>
         <span className="mx-2">&rsaquo;</span>
