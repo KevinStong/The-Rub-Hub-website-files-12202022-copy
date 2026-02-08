@@ -85,34 +85,46 @@
 
 ---
 
-## Phase 3: Provider Directory
+## Phase 3: Provider Directory (COMPLETE)
 
 **Goal:** Fully functional directory search and provider profile pages.
 
 **Work:**
-- Build directory search page (`/directory`):
-  - Search by keyword (provider name, bio)
-  - Filter by category and specialty
-  - Filter by location with radius (geocoding + distance calc)
-  - Paginated results
-- Build provider card component for search results
-- Build individual provider profile page (`/directory/[slug]`):
-  - Bio/description
-  - Contact information (respecting `isPublic` flag)
-  - Locations with embedded map (Google Maps or Mapbox)
-  - Services/menu with pricing
-  - Photos gallery
-  - Events
-  - Coupons
-  - Reviews
-- Build search API route (`/api/directory/search`) for client-side filtering
-- Implement `lib/geo.ts` for geocoding and distance calculations
+- [x] Build directory search page (`/directory`):
+  - [x] Search by keyword (provider name, bio)
+  - [x] Filter by category and specialty
+  - [x] Filter by state and city
+  - [x] Paginated results (20 per page)
+- [x] Build provider card component for search results
+- [x] Build search form component (client component with URL-based state)
+- [x] Build pagination component
+- [x] Build individual provider profile page (`/directory/[slug]`):
+  - [x] Bio/description
+  - [x] Contact information (respecting `isPublic` flag)
+  - [x] Locations (address display)
+  - [x] Services/menu with pricing and "Special" badges
+  - [x] Photos gallery
+  - [x] Events
+  - [x] Coupons
+  - [x] Reviews (filtered to approved only)
+  - [x] Category and specialty tags
+  - [x] Dynamic SEO metadata per provider
+- [ ] Location-based radius search (deferred — requires geocoding API)
+- [ ] Embedded maps on profile pages (deferred — requires Google Maps/Mapbox API)
 
 **Verification:**
-- Can search providers by keyword, category, specialty
-- Location-based search returns results within specified radius
-- Provider profile pages display all sections with real data
-- Map renders with correct pin locations
+- [x] Can search providers by keyword, category, specialty
+- [x] Can filter by state and city
+- [x] Provider profile pages display all sections with real data
+- [x] Empty sections hide themselves automatically
+- [x] 404 for nonexistent provider slugs
+- [x] `next build` succeeds without errors
+
+**Notes:**
+- Architecture: Server Components with URL-based search state for SEO and shareability
+- Only client components: SearchForm (form handling) and Pagination (search param preservation)
+- All data fetching via Prisma with parallel queries (Promise.all)
+- Prisma 7 Decimal import path: `@prisma/client/runtime/client` (not the v5/v6 path)
 
 ---
 
