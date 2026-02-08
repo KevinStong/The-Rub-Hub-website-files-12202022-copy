@@ -2,7 +2,7 @@ type Review = {
   id: number;
   content: string;
   status: string;
-  createdAt: Date;
+  createdAt: Date | string;
 };
 
 export function ReviewsSection({ reviews }: { reviews: Review[] }) {

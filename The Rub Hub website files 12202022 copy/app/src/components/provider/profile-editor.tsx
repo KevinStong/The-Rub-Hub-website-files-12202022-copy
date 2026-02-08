@@ -110,11 +110,12 @@ type ProfileEditorProps = {
   isOwner: boolean;
 };
 
-function EditButton({ onClick }: { onClick: () => void }) {
+function EditButton({ onClick, section }: { onClick: () => void; section: string }) {
   return (
     <button
       onClick={onClick}
-      className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 transition-opacity rounded bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700 hover:bg-zinc-200"
+      aria-label={`Edit ${section}`}
+      className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100 transition-opacity rounded bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700 hover:bg-zinc-200"
     >
       Edit
     </button>
@@ -134,7 +135,7 @@ export function ProfileEditor({ provider, isOwner }: ProfileEditorProps) {
       {/* Bio / About section */}
       <div className="group relative mt-8">
         {isOwner && editingSection !== "bio" && (
-          <EditButton onClick={() => setEditingSection("bio")} />
+          <EditButton onClick={() => setEditingSection("bio")} section="bio" />
         )}
         {editingSection === "bio" ? (
           <BioForm provider={provider} onCancel={cancelEditing} />
@@ -155,7 +156,7 @@ export function ProfileEditor({ provider, isOwner }: ProfileEditorProps) {
         {/* Contacts */}
         <div className="group relative">
           {isOwner && editingSection !== "contacts" && (
-            <EditButton onClick={() => setEditingSection("contacts")} />
+            <EditButton onClick={() => setEditingSection("contacts")} section="contacts" />
           )}
           {editingSection === "contacts" ? (
             <ContactsForm
@@ -170,7 +171,7 @@ export function ProfileEditor({ provider, isOwner }: ProfileEditorProps) {
         {/* Locations */}
         <div className="group relative">
           {isOwner && editingSection !== "locations" && (
-            <EditButton onClick={() => setEditingSection("locations")} />
+            <EditButton onClick={() => setEditingSection("locations")} section="locations" />
           )}
           {editingSection === "locations" ? (
             <LocationsForm
@@ -185,7 +186,7 @@ export function ProfileEditor({ provider, isOwner }: ProfileEditorProps) {
         {/* Services */}
         <div className="group relative">
           {isOwner && editingSection !== "services" && (
-            <EditButton onClick={() => setEditingSection("services")} />
+            <EditButton onClick={() => setEditingSection("services")} section="services" />
           )}
           {editingSection === "services" ? (
             <ServicesForm
@@ -193,7 +194,7 @@ export function ProfileEditor({ provider, isOwner }: ProfileEditorProps) {
               onCancel={cancelEditing}
             />
           ) : (
-            <ServicesSection services={provider.services as any} />
+            <ServicesSection services={provider.services} />
           )}
         </div>
 
@@ -203,19 +204,19 @@ export function ProfileEditor({ provider, isOwner }: ProfileEditorProps) {
         {/* Events */}
         <div className="group relative">
           {isOwner && editingSection !== "events" && (
-            <EditButton onClick={() => setEditingSection("events")} />
+            <EditButton onClick={() => setEditingSection("events")} section="events" />
           )}
           {editingSection === "events" ? (
             <EventsForm events={provider.events} onCancel={cancelEditing} />
           ) : (
-            <EventsSection events={provider.events as any} />
+            <EventsSection events={provider.events} />
           )}
         </div>
 
         {/* Coupons */}
         <div className="group relative">
           {isOwner && editingSection !== "coupons" && (
-            <EditButton onClick={() => setEditingSection("coupons")} />
+            <EditButton onClick={() => setEditingSection("coupons")} section="coupons" />
           )}
           {editingSection === "coupons" ? (
             <CouponsForm
@@ -223,12 +224,12 @@ export function ProfileEditor({ provider, isOwner }: ProfileEditorProps) {
               onCancel={cancelEditing}
             />
           ) : (
-            <CouponsSection coupons={provider.coupons as any} />
+            <CouponsSection coupons={provider.coupons} />
           )}
         </div>
 
         {/* Reviews — always read-only */}
-        <ReviewsSection reviews={provider.reviews as any} />
+        <ReviewsSection reviews={provider.reviews} />
       </div>
     </>
   );
