@@ -1,4 +1,4 @@
-import type { Decimal } from "@/generated/prisma/client/runtime/library";
+import type { Decimal } from "@prisma/client/runtime/client";
 
 type Service = {
   id: number;
