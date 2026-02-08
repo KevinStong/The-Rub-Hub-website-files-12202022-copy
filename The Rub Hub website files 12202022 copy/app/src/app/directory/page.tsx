@@ -103,36 +103,38 @@ export default async function DirectoryPage({
         Find massage therapists and bodywork providers near you.
       </p>
 
-      <div className="mt-6">
-        <Suspense fallback={null}>
-          <SearchForm
-            categories={categories}
-            specialties={specialties}
-            states={states}
-          />
-        </Suspense>
-      </div>
+      <div className="mt-6 flex flex-col gap-8 lg:flex-row">
+        <aside className="w-full shrink-0 lg:w-64">
+          <Suspense fallback={null}>
+            <SearchForm
+              categories={categories}
+              specialties={specialties}
+              states={states}
+            />
+          </Suspense>
+        </aside>
 
-      <div className="mt-8">
-        {totalCount > 0 ? (
-          <>
-            <p className="mb-4 text-sm text-zinc-500">
-              Showing {start}–{end} of {totalCount} providers
+        <div className="flex-1">
+          {totalCount > 0 ? (
+            <>
+              <p className="mb-4 text-sm text-zinc-500">
+                Showing {start}–{end} of {totalCount} providers
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {providers.map((provider) => (
+                  <ProviderCard key={provider.id} provider={provider} />
+                ))}
+              </div>
+              <Suspense fallback={null}>
+                <Pagination currentPage={page} totalPages={totalPages} />
+              </Suspense>
+            </>
+          ) : (
+            <p className="text-zinc-500">
+              No providers found. Try adjusting your search filters.
             </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {providers.map((provider) => (
-                <ProviderCard key={provider.id} provider={provider} />
-              ))}
-            </div>
-            <Suspense fallback={null}>
-              <Pagination currentPage={page} totalPages={totalPages} />
-            </Suspense>
-          </>
-        ) : (
-          <p className="text-zinc-500">
-            No providers found. Try adjusting your search filters.
-          </p>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
