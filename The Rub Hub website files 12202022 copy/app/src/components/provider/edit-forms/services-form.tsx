@@ -19,6 +19,7 @@ type ServicesFormProps = {
 };
 
 type ServiceDraft = {
+  _key: string;
   id: number | null;
   name: string;
   type: string;
@@ -29,6 +30,7 @@ type ServiceDraft = {
 
 function toServiceDraft(s: Service): ServiceDraft {
   return {
+    _key: crypto.randomUUID(),
     id: s.id,
     name: s.name,
     type: s.type ?? "",
@@ -40,6 +42,7 @@ function toServiceDraft(s: Service): ServiceDraft {
 
 function emptyService(): ServiceDraft {
   return {
+    _key: crypto.randomUUID(),
     id: null,
     name: "",
     type: "",
@@ -114,7 +117,7 @@ export function ServicesForm({ services, onCancel }: ServicesFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {items.map((item, index) => (
         <div
-          key={index}
+          key={item._key}
           className="rounded-lg border border-zinc-200 p-4 space-y-3"
         >
           <div className="flex items-center justify-between">
@@ -134,21 +137,24 @@ export function ServicesForm({ services, onCancel }: ServicesFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`service-${index}-name`} className="block text-sm font-medium text-zinc-700">
                 Name
               </label>
               <input
+                id={`service-${index}-name`}
                 type="text"
+                required
                 value={item.name}
                 onChange={(e) => updateItem(index, { name: e.target.value })}
                 className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`service-${index}-type`} className="block text-sm font-medium text-zinc-700">
                 Type
               </label>
               <input
+                id={`service-${index}-type`}
                 type="text"
                 value={item.type}
                 onChange={(e) => updateItem(index, { type: e.target.value })}
@@ -159,10 +165,11 @@ export function ServicesForm({ services, onCancel }: ServicesFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-3">
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`service-${index}-price`} className="block text-sm font-medium text-zinc-700">
                 Price
               </label>
               <input
+                id={`service-${index}-price`}
                 type="number"
                 step="0.01"
                 min="0"
@@ -188,10 +195,11 @@ export function ServicesForm({ services, onCancel }: ServicesFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`service-${index}-description`} className="block text-sm font-medium text-zinc-700">
               Description
             </label>
             <textarea
+              id={`service-${index}-description`}
               rows={2}
               value={item.description}
               onChange={(e) =>
@@ -212,7 +220,7 @@ export function ServicesForm({ services, onCancel }: ServicesFormProps) {
       </button>
 
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600" role="alert">{error}</p>
       )}
 
       <div className="flex gap-3">

@@ -20,6 +20,7 @@ type EventsFormProps = {
 };
 
 type EventDraft = {
+  _key: string;
   id: number | null;
   name: string;
   description: string;
@@ -39,6 +40,7 @@ function formatDate(d: Date | string | null): string {
 
 function toEventDraft(ev: Event): EventDraft {
   return {
+    _key: crypto.randomUUID(),
     id: ev.id,
     name: ev.name,
     description: ev.description ?? "",
@@ -52,6 +54,7 @@ function toEventDraft(ev: Event): EventDraft {
 
 function emptyEvent(): EventDraft {
   return {
+    _key: crypto.randomUUID(),
     id: null,
     name: "",
     description: "",
@@ -128,7 +131,7 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {items.map((item, index) => (
         <div
-          key={index}
+          key={item._key}
           className="rounded-lg border border-zinc-200 p-4 space-y-3"
         >
           <div className="flex items-center justify-between">
@@ -147,11 +150,13 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`event-${index}-name`} className="block text-sm font-medium text-zinc-700">
               Name
             </label>
             <input
+              id={`event-${index}-name`}
               type="text"
+              required
               value={item.name}
               onChange={(e) => updateItem(index, { name: e.target.value })}
               className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
@@ -159,10 +164,11 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`event-${index}-description`} className="block text-sm font-medium text-zinc-700">
               Description
             </label>
             <textarea
+              id={`event-${index}-description`}
               rows={3}
               value={item.description}
               onChange={(e) =>
@@ -174,11 +180,13 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`event-${index}-startDate`} className="block text-sm font-medium text-zinc-700">
                 Start Date
               </label>
               <input
+                id={`event-${index}-startDate`}
                 type="date"
+                required
                 value={item.startDate}
                 onChange={(e) =>
                   updateItem(index, { startDate: e.target.value })
@@ -187,10 +195,11 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`event-${index}-endDate`} className="block text-sm font-medium text-zinc-700">
                 End Date
               </label>
               <input
+                id={`event-${index}-endDate`}
                 type="date"
                 value={item.endDate}
                 onChange={(e) =>
@@ -203,10 +212,11 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`event-${index}-city`} className="block text-sm font-medium text-zinc-700">
                 City
               </label>
               <input
+                id={`event-${index}-city`}
                 type="text"
                 value={item.city}
                 onChange={(e) => updateItem(index, { city: e.target.value })}
@@ -214,10 +224,11 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`event-${index}-state`} className="block text-sm font-medium text-zinc-700">
                 State
               </label>
               <input
+                id={`event-${index}-state`}
                 type="text"
                 value={item.state}
                 onChange={(e) => updateItem(index, { state: e.target.value })}
@@ -249,7 +260,7 @@ export function EventsForm({ events, onCancel }: EventsFormProps) {
       </button>
 
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600" role="alert">{error}</p>
       )}
 
       <div className="flex gap-3">

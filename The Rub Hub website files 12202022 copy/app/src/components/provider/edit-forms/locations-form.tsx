@@ -21,6 +21,7 @@ type LocationsFormProps = {
 };
 
 type LocationDraft = {
+  _key: string;
   id: number | null;
   name: string;
   address1: string;
@@ -34,6 +35,7 @@ type LocationDraft = {
 
 function toLocationDraft(loc: Location): LocationDraft {
   return {
+    _key: crypto.randomUUID(),
     id: loc.id,
     name: loc.name ?? "",
     address1: loc.address1,
@@ -48,6 +50,7 @@ function toLocationDraft(loc: Location): LocationDraft {
 
 function emptyLocation(): LocationDraft {
   return {
+    _key: crypto.randomUUID(),
     id: null,
     name: "",
     address1: "",
@@ -126,7 +129,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {items.map((item, index) => (
         <div
-          key={index}
+          key={item._key}
           className="rounded-lg border border-zinc-200 p-4 space-y-3"
         >
           <div className="flex items-center justify-between">
@@ -145,10 +148,11 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`location-${index}-name`} className="block text-sm font-medium text-zinc-700">
               Location Name
             </label>
             <input
+              id={`location-${index}-name`}
               type="text"
               value={item.name}
               onChange={(e) => updateItem(index, { name: e.target.value })}
@@ -158,11 +162,13 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`location-${index}-address1`} className="block text-sm font-medium text-zinc-700">
               Address Line 1
             </label>
             <input
+              id={`location-${index}-address1`}
               type="text"
+              required
               value={item.address1}
               onChange={(e) => updateItem(index, { address1: e.target.value })}
               className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
@@ -170,10 +176,11 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`location-${index}-address2`} className="block text-sm font-medium text-zinc-700">
               Address Line 2
             </label>
             <input
+              id={`location-${index}-address2`}
               type="text"
               value={item.address2}
               onChange={(e) => updateItem(index, { address2: e.target.value })}
@@ -183,33 +190,39 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-4">
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`location-${index}-city`} className="block text-sm font-medium text-zinc-700">
                 City
               </label>
               <input
+                id={`location-${index}-city`}
                 type="text"
+                required
                 value={item.city}
                 onChange={(e) => updateItem(index, { city: e.target.value })}
                 className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`location-${index}-state`} className="block text-sm font-medium text-zinc-700">
                 State
               </label>
               <input
+                id={`location-${index}-state`}
                 type="text"
+                required
                 value={item.state}
                 onChange={(e) => updateItem(index, { state: e.target.value })}
                 className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`location-${index}-zip`} className="block text-sm font-medium text-zinc-700">
                 ZIP
               </label>
               <input
+                id={`location-${index}-zip`}
                 type="text"
+                required
                 value={item.zip}
                 onChange={(e) => updateItem(index, { zip: e.target.value })}
                 className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
@@ -218,10 +231,11 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`location-${index}-country`} className="block text-sm font-medium text-zinc-700">
               Country
             </label>
             <input
+              id={`location-${index}-country`}
               type="text"
               value={item.country}
               onChange={(e) => updateItem(index, { country: e.target.value })}
@@ -252,7 +266,7 @@ export function LocationsForm({ locations, onCancel }: LocationsFormProps) {
       </button>
 
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600" role="alert">{error}</p>
       )}
 
       <div className="flex gap-3">

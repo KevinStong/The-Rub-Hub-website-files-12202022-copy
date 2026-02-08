@@ -47,13 +47,13 @@ export function BioForm({ provider, onCancel }: BioFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label
-          htmlFor="provider-name"
+          htmlFor="bio-name"
           className="block text-sm font-medium text-zinc-700"
         >
           Name <span className="text-red-500">*</span>
         </label>
         <input
-          id="provider-name"
+          id="bio-name"
           type="text"
           required
           value={name}
@@ -64,13 +64,13 @@ export function BioForm({ provider, onCancel }: BioFormProps) {
 
       <div>
         <label
-          htmlFor="provider-bio"
+          htmlFor="bio-bio"
           className="block text-sm font-medium text-zinc-700"
         >
           Bio
         </label>
         <textarea
-          id="provider-bio"
+          id="bio-bio"
           rows={6}
           value={bio}
           onChange={(e) => setBio(e.target.value)}
@@ -79,7 +79,7 @@ export function BioForm({ provider, onCancel }: BioFormProps) {
       </div>
 
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600" role="alert">{error}</p>
       )}
 
       <div className="flex gap-3">

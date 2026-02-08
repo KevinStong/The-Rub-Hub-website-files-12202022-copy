@@ -22,6 +22,7 @@ type CouponsFormProps = {
 };
 
 type CouponDraft = {
+  _key: string;
   id: number | null;
   name: string;
   description: string;
@@ -42,6 +43,7 @@ function formatDate(d: Date | string | null): string {
 
 function toCouponDraft(c: Coupon): CouponDraft {
   return {
+    _key: crypto.randomUUID(),
     id: c.id,
     name: c.name,
     description: c.description ?? "",
@@ -56,6 +58,7 @@ function toCouponDraft(c: Coupon): CouponDraft {
 
 function emptyCoupon(): CouponDraft {
   return {
+    _key: crypto.randomUUID(),
     id: null,
     name: "",
     description: "",
@@ -136,7 +139,7 @@ export function CouponsForm({ coupons, onCancel }: CouponsFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {items.map((item, index) => (
         <div
-          key={index}
+          key={item._key}
           className="rounded-lg border border-zinc-200 p-4 space-y-3"
         >
           <div className="flex items-center justify-between">
@@ -156,21 +159,24 @@ export function CouponsForm({ coupons, onCancel }: CouponsFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`coupon-${index}-name`} className="block text-sm font-medium text-zinc-700">
                 Name
               </label>
               <input
+                id={`coupon-${index}-name`}
                 type="text"
+                required
                 value={item.name}
                 onChange={(e) => updateItem(index, { name: e.target.value })}
                 className="mt-1 w-full border border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-400"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`coupon-${index}-promoCode`} className="block text-sm font-medium text-zinc-700">
                 Promo Code
               </label>
               <input
+                id={`coupon-${index}-promoCode`}
                 type="text"
                 value={item.promoCode}
                 onChange={(e) =>
@@ -182,10 +188,11 @@ export function CouponsForm({ coupons, onCancel }: CouponsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`coupon-${index}-description`} className="block text-sm font-medium text-zinc-700">
               Description
             </label>
             <textarea
+              id={`coupon-${index}-description`}
               rows={2}
               value={item.description}
               onChange={(e) =>
@@ -196,10 +203,11 @@ export function CouponsForm({ coupons, onCancel }: CouponsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`coupon-${index}-smallPrint`} className="block text-sm font-medium text-zinc-700">
               Small Print
             </label>
             <textarea
+              id={`coupon-${index}-smallPrint`}
               rows={2}
               value={item.smallPrint}
               onChange={(e) =>
@@ -210,10 +218,11 @@ export function CouponsForm({ coupons, onCancel }: CouponsFormProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-700">
+            <label htmlFor={`coupon-${index}-expirationDate`} className="block text-sm font-medium text-zinc-700">
               Expiration Date
             </label>
             <input
+              id={`coupon-${index}-expirationDate`}
               type="date"
               value={item.expirationDate}
               onChange={(e) =>
@@ -270,7 +279,7 @@ export function CouponsForm({ coupons, onCancel }: CouponsFormProps) {
       </button>
 
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600" role="alert">{error}</p>
       )}
 
       <div className="flex gap-3">

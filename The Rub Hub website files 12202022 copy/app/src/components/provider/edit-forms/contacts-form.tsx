@@ -18,6 +18,7 @@ type ContactsFormProps = {
 };
 
 type ContactDraft = {
+  _key: string;
   id: number | null;
   firstName: string;
   lastName: string;
@@ -28,6 +29,7 @@ type ContactDraft = {
 
 function toContactDraft(c: Contact): ContactDraft {
   return {
+    _key: crypto.randomUUID(),
     id: c.id,
     firstName: c.firstName,
     lastName: c.lastName,
@@ -39,6 +41,7 @@ function toContactDraft(c: Contact): ContactDraft {
 
 function emptyContact(): ContactDraft {
   return {
+    _key: crypto.randomUUID(),
     id: null,
     firstName: "",
     lastName: "",
@@ -111,7 +114,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {items.map((item, index) => (
         <div
-          key={index}
+          key={item._key}
           className="rounded-lg border border-zinc-200 p-4 space-y-3"
         >
           <div className="flex items-center justify-between">
@@ -131,11 +134,13 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`contact-${index}-firstName`} className="block text-sm font-medium text-zinc-700">
                 First Name
               </label>
               <input
+                id={`contact-${index}-firstName`}
                 type="text"
+                required
                 value={item.firstName}
                 onChange={(e) =>
                   updateItem(index, { firstName: e.target.value })
@@ -144,10 +149,11 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`contact-${index}-lastName`} className="block text-sm font-medium text-zinc-700">
                 Last Name
               </label>
               <input
+                id={`contact-${index}-lastName`}
                 type="text"
                 value={item.lastName}
                 onChange={(e) =>
@@ -160,10 +166,11 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`contact-${index}-email`} className="block text-sm font-medium text-zinc-700">
                 Email
               </label>
               <input
+                id={`contact-${index}-email`}
                 type="email"
                 value={item.email}
                 onChange={(e) =>
@@ -173,10 +180,11 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-zinc-700">
+              <label htmlFor={`contact-${index}-phone`} className="block text-sm font-medium text-zinc-700">
                 Phone
               </label>
               <input
+                id={`contact-${index}-phone`}
                 type="tel"
                 value={item.phone}
                 onChange={(e) =>
@@ -210,7 +218,7 @@ export function ContactsForm({ contacts, onCancel }: ContactsFormProps) {
       </button>
 
       {error && (
-        <p className="text-sm text-red-600">{error}</p>
+        <p className="text-sm text-red-600" role="alert">{error}</p>
       )}
 
       <div className="flex gap-3">
