@@ -26,7 +26,7 @@ export function ContactSection({ contacts }: { contacts: Contact[] }) {
             {contact.email && (
               <a
                 href={`mailto:${contact.email}`}
-                className="mt-1 block text-sm text-blue-600 hover:underline"
+                className="mt-1 block text-sm text-brand-blue hover:underline"
               >
                 {contact.email}
               </a>
@@ -34,7 +34,7 @@ export function ContactSection({ contacts }: { contacts: Contact[] }) {
             {contact.phone && (
               <a
                 href={`tel:${contact.phone}`}
-                className="mt-1 block text-sm text-blue-600 hover:underline"
+                className="mt-1 block text-sm text-brand-blue hover:underline"
               >
                 {contact.phone}
               </a>

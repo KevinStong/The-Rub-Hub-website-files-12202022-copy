@@ -21,7 +21,7 @@ export function LocationSection({ locations }: { locations: Location[] }) {
         {visible.map((loc) => (
           <div
             key={loc.id}
-            className="rounded-lg border border-zinc-200 p-4"
+            className="rounded-lg border border-zinc-200 p-4 shadow-sm"
           >
             {loc.name && (
               <p className="font-medium text-zinc-900">{loc.name}</p>

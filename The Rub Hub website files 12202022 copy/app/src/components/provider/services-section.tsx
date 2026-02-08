@@ -43,7 +43,7 @@ export function ServicesSection({ services }: { services: Service[] }) {
                 )}
               </div>
               {service.price && (
-                <span className="shrink-0 text-sm font-semibold text-zinc-900">
+                <span className="shrink-0 text-sm font-semibold text-brand-blue">
                   ${Number(service.price).toFixed(2)}
                 </span>
               )}

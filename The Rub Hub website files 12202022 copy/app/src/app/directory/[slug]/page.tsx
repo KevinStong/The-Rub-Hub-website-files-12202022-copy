@@ -79,7 +79,7 @@ export default async function ProviderProfilePage({ params }: PageProps) {
           {provider.categories.map((pc) => (
             <span
               key={pc.categoryId}
-              className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700"
+              className="rounded-full bg-brand-blue-light px-3 py-1 text-xs font-medium text-brand-blue"
             >
               {pc.category.name}
             </span>
@@ -91,7 +91,7 @@ export default async function ProviderProfilePage({ params }: PageProps) {
           {provider.specialties.map((ps) => (
             <span
               key={ps.specialtyId}
-              className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
+              className="rounded-full bg-brand-blue-light px-3 py-1 text-xs font-medium text-brand-blue"
             >
               {ps.specialty.name}
             </span>

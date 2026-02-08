@@ -115,7 +115,7 @@ function EditButton({ onClick, section }: { onClick: () => void; section: string
     <button
       onClick={onClick}
       aria-label={`Edit ${section}`}
-      className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100 transition-opacity rounded bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-700 hover:bg-zinc-200"
+      className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100 transition-opacity rounded bg-brand-blue px-3 py-1 text-sm font-medium text-white hover:bg-brand-blue-dark"
     >
       Edit
     </button>
