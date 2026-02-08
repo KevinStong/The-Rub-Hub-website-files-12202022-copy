@@ -17,7 +17,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
   return (
     <Link
       href={`/directory/${provider.slug}`}
-      className="block rounded-lg border border-zinc-200 bg-white p-5 transition-shadow hover:shadow-md"
+      className="flex flex-col justify-between rounded-lg border border-zinc-200 bg-white p-5 transition-shadow hover:shadow-md"
     >
       <h2 className="text-lg font-semibold text-zinc-900">{provider.name}</h2>
       <div className="mt-1 flex flex-wrap gap-2 text-sm text-zinc-500">
@@ -36,6 +36,9 @@ export function ProviderCard({ provider }: ProviderCardProps) {
           {provider.bio}
         </p>
       )}
+      <span className="mt-4 inline-block self-start rounded-md bg-brand-blue px-4 py-1.5 text-sm font-medium text-white">
+        View Profile
+      </span>
     </Link>
   );
 }
