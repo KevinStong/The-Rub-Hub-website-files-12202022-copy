@@ -30,30 +30,39 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-zinc-900 px-4 py-24 text-center">
-        <div className="mx-auto max-w-3xl">
+      <section className="relative bg-brand-blue px-4 py-28 text-center">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative mx-auto max-w-3xl">
           <h1 className="text-5xl font-bold tracking-tight text-white">
             The Rub Hub
           </h1>
-          <p className="mt-4 text-lg text-zinc-300">
-            Find massage therapists and bodywork providers near you.
+          <p className="mt-4 text-lg italic text-white/90">
+            Connecting you with health, wellness, and spa practitioners
           </p>
           <form
             action="/directory"
             method="GET"
-            className="mx-auto mt-10 flex max-w-xl gap-3"
+            className="mx-auto mt-10 flex max-w-2xl flex-col gap-3 sm:flex-row"
           >
-            <label htmlFor="hero-search" className="sr-only">Search for providers</label>
+            <label htmlFor="hero-search" className="sr-only">Search by keyword</label>
             <input
               id="hero-search"
               type="text"
               name="q"
-              placeholder="Search by name, specialty, or location..."
-              className="flex-1 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 text-white placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
+              placeholder="Keyword (e.g. deep tissue, sports)..."
+              className="flex-1 rounded-lg bg-white/20 px-4 py-3 text-white placeholder-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white"
+            />
+            <label htmlFor="hero-location" className="sr-only">Search by location</label>
+            <input
+              id="hero-location"
+              type="text"
+              name="city"
+              placeholder="Location (city or state)..."
+              className="flex-1 rounded-lg bg-white/20 px-4 py-3 text-white placeholder-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white"
             />
             <button
               type="submit"
-              className="rounded-lg bg-white px-6 py-3 font-semibold text-zinc-900 transition-colors hover:bg-zinc-100"
+              className="rounded-lg bg-brand-blue px-6 py-3 font-semibold text-white transition-colors hover:bg-brand-blue-dark"
             >
               Search
             </button>
@@ -65,19 +74,19 @@ export default async function Home() {
       {categories.length > 0 && (
         <section className="mx-auto max-w-6xl px-4 py-16">
           <h2 className="text-2xl font-bold text-zinc-900">
-            Browse by Category
+            Top Services
           </h2>
           <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
             {categories.map((category) => (
               <Link
                 key={category.id}
                 href={`/category/${category.slug}`}
-                className="rounded-lg bg-zinc-100 p-5 transition-colors hover:bg-zinc-200"
+                className="rounded-lg border border-gray-200 bg-white p-5 transition-colors hover:border-brand-blue hover:shadow-sm"
               >
                 <span className="block font-semibold text-zinc-900">
                   {category.name}
                 </span>
-                <span className="mt-1 block text-sm text-zinc-500">
+                <span className="mt-1 block text-sm text-brand-blue">
                   {category._count.providers}{" "}
                   {category._count.providers === 1 ? "provider" : "providers"}
                 </span>
