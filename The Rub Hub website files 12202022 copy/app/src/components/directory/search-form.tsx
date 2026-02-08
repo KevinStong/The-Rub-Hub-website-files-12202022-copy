@@ -36,27 +36,23 @@ export function SearchForm({ categories, specialties, states }: SearchFormProps)
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex flex-col gap-4 sm:flex-row">
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+    >
+      <h2 className="text-lg font-semibold text-zinc-900">Refine Your Search</h2>
+      <div className="mt-4 flex flex-col gap-3">
         <input
           type="text"
           name="q"
           placeholder="Search providers..."
           defaultValue={searchParams.get("q") ?? ""}
-          className="flex-1 rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+          className="w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
         />
-        <button
-          type="submit"
-          className="rounded-md bg-zinc-900 px-5 py-2 text-sm font-medium text-white hover:bg-zinc-800"
-        >
-          Search
-        </button>
-      </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <select
           name="category"
           defaultValue={searchParams.get("category") ?? ""}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
         >
           <option value="">All Categories</option>
           {categories.map((c) => (
@@ -68,7 +64,7 @@ export function SearchForm({ categories, specialties, states }: SearchFormProps)
         <select
           name="specialty"
           defaultValue={searchParams.get("specialty") ?? ""}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
         >
           <option value="">All Specialties</option>
           {specialties.map((s) => (
@@ -80,7 +76,7 @@ export function SearchForm({ categories, specialties, states }: SearchFormProps)
         <select
           name="state"
           defaultValue={searchParams.get("state") ?? ""}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+          className="rounded-md border border-zinc-300 px-3 py-2 text-sm text-zinc-700 focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
         >
           <option value="">All States</option>
           {states.map((s) => (
@@ -94,8 +90,14 @@ export function SearchForm({ categories, specialties, states }: SearchFormProps)
           name="city"
           placeholder="City"
           defaultValue={searchParams.get("city") ?? ""}
-          className="rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+          className="rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
         />
+        <button
+          type="submit"
+          className="w-full rounded-md bg-brand-blue px-5 py-2 text-sm font-medium text-white hover:bg-brand-blue-dark"
+        >
+          Search
+        </button>
       </div>
     </form>
   );
